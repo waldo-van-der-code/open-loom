@@ -1,0 +1,89 @@
+/* open-loom: structural CSS for the script page and the stage window. */
+:root{--bg:#16161a;--panel:#202026;--line:#33333b;--ink:#ececf1;--mute:#9a9aa6;--acc:#625df5;--soft:#c4a3f5;--soft-ink:#24062e}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif}
+
+/* layout: stage on top, script panel below */
+.app{display:flex;flex-direction:column;gap:10px;padding:12px;height:100vh}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px}
+#stage{position:relative;flex:none;aspect-ratio:16/9;width:min(100%,calc((64vh - 66px) * 16 / 9));background:#000;border-radius:10px;overflow:hidden}
+#inner{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.hint{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--mute);font-size:12px}
+.hint .right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+/* views */
+.view{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .15s}
+.view.on{opacity:1;pointer-events:auto}
+.rv{transition:opacity .15s,transform .15s}
+.rv.hide{opacity:0;transform:translateY(10px)}
+
+/* default slide look (override in slides.css) */
+.slide{background:#fff;color:#191917;padding:64px 80px;display:flex;flex-direction:column}
+.slide h2{font-size:52px;line-height:1.15;margin:0 0 32px;letter-spacing:-.015em}
+.slide p,.slide li{font-size:32px;line-height:1.4;margin:0 0 16px}
+.slide ul{margin:0;padding-left:1.1em}
+.slide .kicker{font-size:22px;color:#6d6a63;text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px}
+
+/* camera segment placeholder (the real picture is #camvid / #camcv) */
+.camv{background:#0d0d10;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.camv b{font-size:54px}
+.camv span{font-size:24px;color:#aaa}
+
+/* screen segment: live demo iframe */
+.scr{background:#fff}
+#demo{position:absolute;left:0;top:0;width:1280px;height:720px;border:0;background:#fff}
+
+/* webcam: video + processed canvas, bubble or full frame */
+#camvid,#camcv{position:absolute;z-index:4;object-fit:cover;background:#000;transition:all .25s;display:none;pointer-events:none}
+#camvid.on,#camcv.on{display:block}
+body.mirror #camcv,body.mirror #camvid{transform:scaleX(-1)}
+body:not(.fx) #camcv{display:none!important}
+body.fx #camvid{visibility:hidden}
+#camvid.bub,#camcv.bub{left:26px;bottom:26px;width:190px;height:190px;border-radius:50%;box-shadow:0 0 0 4px #fff,0 4px 18px #0006}
+#camvid.full,#camcv.full{left:0;top:0;width:1280px;height:720px;border-radius:0;box-shadow:none}
+
+/* script panel */
+.side{flex:none;height:36vh;display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:18px;background:var(--panel);border-radius:10px;padding:14px 18px;overflow:hidden}
+.sl{overflow:auto;height:100%;min-height:0}
+.sl::-webkit-scrollbar{width:6px}
+.sl::-webkit-scrollbar-thumb{background:#444;border-radius:3px}
+.sl::-webkit-scrollbar-track{background:transparent}
+.hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.hd b{font-size:15px}
+.hd i{font-style:normal;color:var(--mute);font-size:12px;text-transform:uppercase}
+#say{font-size:20px;line-height:1.5;color:#e9e9ef;white-space:pre-wrap}
+#say .mk{display:inline-block;font-size:12px;font-weight:700;background:#3a3a46;color:#bbb;border-radius:4px;padding:0 6px;margin:0 4px;vertical-align:2px}
+#say .mk.next{background:var(--acc);color:#fff}
+#say .mk.done{opacity:.35}
+.sr{display:flex;flex-direction:column;min-height:0}
+#cue{display:none;margin:0 0 12px;padding:8px 10px;border-radius:6px;background:#2b3a2f;color:#bfe8cb;font-size:14px}
+.btns{display:flex;gap:8px}
+.btns button{flex:1;padding:10px;font-size:15px}
+#nexts{margin-top:auto;padding-top:14px;color:var(--mute);font-size:13px;border-top:1px solid var(--line)}
+
+/* buttons */
+button{background:#2a2a35;color:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
+button:hover{border-color:var(--acc)}
+.btns button{font-size:15px}
+#stageb{background:var(--soft);color:var(--soft-ink);border:0;font-weight:600}
+#camb{background:var(--acc);color:#fff;border:0}
+
+/* stage window (?stage=1): stage only, no chrome */
+body.stagemode{background:#000}
+body.stagemode .side,body.stagemode .hint{display:none!important}
+body.stagemode .app{padding:0;gap:0;height:100vh}
+body.stagemode .main{justify-content:center;align-items:center}
+body.stagemode #stage{width:min(100vw,calc(100vh * 16 / 9));border-radius:0}
+
+/* mirror of the live demo (see mirror.js) */
+#mirc{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:2;display:none;background:#fff}
+body.mirroring #mirc{display:block}
+#mirb{display:none;position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:50;background:var(--soft);color:var(--soft-ink);border:0;border-radius:8px;padding:12px 18px;font:600 15px -apple-system,BlinkMacSystemFont,"Inter",Arial,sans-serif;cursor:pointer}
+body:has(#v-scr.on) #mirb{display:block}   /* only while the screen segment shows, so it is not recorded on slides */
+/* stage window open: the script page hides its camera over the live demo (it would be captured twice) and shows a preview in the left gutter instead */
+body.nocam:has(#v-scr.on) #camvid,body.nocam:has(#v-scr.on) #camcv{opacity:0!important}
+#campv{display:none;position:fixed;border-radius:50%;z-index:40;box-shadow:0 4px 18px rgba(0,0,0,.5);border:2px solid var(--soft)}
+body.nocam:has(#v-scr.on) #campv{display:block}
+
+@media (max-width:900px){.side{grid-template-columns:1fr}.sr{display:none}}

@@ -1,0 +1,33 @@
+[
+  {
+    "id": "intro",
+    "title": "What open-loom is",
+    "view": "slide",
+    "say": "Hi, this is open-loom, a small tool for recording a narrated demo in one take. First, the script sits right below the stage, so your eyes stay close to the lens. Second, every press of the right arrow key reveals the next point on the slide. Third, a separate stage window shows only the picture, with your webcam as a bubble, and that is the window you record."
+  },
+  {
+    "id": "camera",
+    "title": "Camera view",
+    "view": "camera",
+    "say": "This is the camera view. Your face fills the frame. Press V to switch between the full frame and a round bubble, B to turn the background blur on or off, and M to mirror the picture."
+  },
+  {
+    "id": "dashboard",
+    "title": "Live demo",
+    "view": "screen",
+    "cue": "Click the Orders tab, then the Customers tab.",
+    "say": "Screen segments show a live page inside the stage. Here is a small fake dashboard. I click the Orders tab, and then the Customers tab. Whatever you click in the script page shows up on the stage window as well."
+  },
+  {
+    "id": "record",
+    "title": "How to record",
+    "view": "slide",
+    "say": "Recording takes three steps. Open the stage window from the button under the stage. Start the macOS screen recorder with Command Shift 5, or use window capture in OBS. Then press the right arrow to move through the script, and stop the recorder when you are done."
+  },
+  {
+    "id": "outro",
+    "title": "Close",
+    "view": "camera",
+    "say": "That is all. The code is free and lives at github.com/waldo-van-der-code/open-loom. Thanks for watching."
+  }
+]

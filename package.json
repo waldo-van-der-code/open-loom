@@ -1,0 +1,16 @@
+{
+  "name": "open-loom",
+  "version": "0.1.0",
+  "description": "Free, local Loom-style self-recording prompter: script, stage window, webcam bubble, live demo.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "python3 -m unittest discover tests",
+    "test:e2e": "node tests/e2e.mjs",
+    "test:mirror": "node tests/mirror.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}
